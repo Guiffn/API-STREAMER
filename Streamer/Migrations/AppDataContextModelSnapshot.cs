@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Streamer.Data;
 
 #nullable disable
 
@@ -72,22 +71,7 @@ namespace Streamer.Migrations
                     b.ToTable("Comentarios");
                 });
 
-            modelBuilder.Entity("Streamer.Models.Categoria", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categorias");
-                });
-
-            modelBuilder.Entity("Streamer.Models.Filme", b =>
+            modelBuilder.Entity("Filme", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,7 +104,22 @@ namespace Streamer.Migrations
                     b.ToTable("Filmes");
                 });
 
-            modelBuilder.Entity("Usuario", b =>
+            modelBuilder.Entity("Streamer.Models.Categoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("Streamer.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +151,7 @@ namespace Streamer.Migrations
 
             modelBuilder.Entity("Assinatura", b =>
                 {
-                    b.HasOne("Usuario", "Usuario")
+                    b.HasOne("Streamer.Models.Usuario", "Usuario")
                         .WithMany("Assinaturas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -163,13 +162,13 @@ namespace Streamer.Migrations
 
             modelBuilder.Entity("Comentario", b =>
                 {
-                    b.HasOne("Streamer.Models.Filme", "Filme")
-                        .WithMany()
+                    b.HasOne("Filme", "Filme")
+                        .WithMany("Comentarios")
                         .HasForeignKey("FilmeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Usuario", "Usuario")
+                    b.HasOne("Streamer.Models.Usuario", "Usuario")
                         .WithMany("Comentarios")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -180,19 +179,24 @@ namespace Streamer.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Streamer.Models.Filme", b =>
+            modelBuilder.Entity("Filme", b =>
                 {
                     b.HasOne("Streamer.Models.Categoria", "Categoria")
                         .WithMany("Filmes")
                         .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Usuario", null)
+                    b.HasOne("Streamer.Models.Usuario", null)
                         .WithMany("Filmes")
                         .HasForeignKey("UsuarioId");
 
                     b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("Filme", b =>
+                {
+                    b.Navigation("Comentarios");
                 });
 
             modelBuilder.Entity("Streamer.Models.Categoria", b =>
@@ -200,7 +204,7 @@ namespace Streamer.Migrations
                     b.Navigation("Filmes");
                 });
 
-            modelBuilder.Entity("Usuario", b =>
+            modelBuilder.Entity("Streamer.Models.Usuario", b =>
                 {
                     b.Navigation("Assinaturas");
 

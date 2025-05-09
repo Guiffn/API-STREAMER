@@ -1,0 +1,133 @@
+@Streamer = http://localhost:5169/api
+@token = <eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0ZTJAZXhlbXBsby5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc3VhcmlvIiwiZXhwIjoxNzQ2ODE3Mzk4LCJpc3MiOiJBUElfU1RSRUFNRVIiLCJhdWQiOiJBUElfU1RSRUFNRVJfVXNlcnMifQ.I-dBWM7E-ZsHVC6yuX4HITozpCRsT0xGXyyXHcyjhNU">
+// coloque o token gerado no login aqui
+
+###
+// 0) REGISTRO
+POST {{Streamer}}/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Pedro Teste",
+  "email": "teste2@exemplo.com",
+  "senha": "Senha123!"
+}
+
+###
+// 1) LOGIN
+POST {{Streamer}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "teste2@exemplo.com",
+  "senha": "Senha123!"
+}
+
+###
+// 2) CATEGORIA – Listar
+GET {{Streamer}}/categoria/listar
+Authorization: Bearer {{token}}
+
+###
+// 3) CATEGORIA – Cadastrar
+POST {{Streamer}}/categoria/cadastrar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Comedia"
+}
+
+###
+// 4) FILME – Listar
+GET {{Streamer}}/filme/listar
+Authorization: Bearer {{token}}
+
+###
+// 5) FILME – Cadastrar
+POST {{Streamer}}/filme/cadastrar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Jumanji",
+  "descricao": "Filme de ação com um jogo",
+  "categoriaId": 1,
+  "linkVideo": "https://www.youtube.com/watch?v=MHrMG5KoVYA"
+}
+
+###
+// 6) USUÁRIO – Listar
+GET {{Streamer}}/usuario/listar
+Authorization: Bearer {{token}}
+
+###
+// 7) USUÁRIO – Buscar por ID
+GET {{Streamer}}/usuario/2
+Authorization: Bearer {{token}}
+
+###
+// 8) USUÁRIO – Atualizar
+PUT {{Streamer}}/usuario/atualizar/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Pedro Teste",
+  "email": "teste2@exemplo.com",
+  "senha": "Senha123!",
+  "permissao": 0,
+  "favoritos": [1, 2, 3]
+}
+
+
+###
+// 9) USUÁRIO – Deletar
+DELETE {{Streamer}}/usuario/deletar/1
+Authorization: Bearer {{token}}
+
+###
+// 10) COMENTÁRIO – Listar
+GET {{Streamer}}/comentario/listar
+Authorization: Bearer {{token}}
+
+###
+// 11) COMENTÁRIO – Cadastrar
+POST {{Streamer}}/comentario/cadastrar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "usuarioId": 2,
+  "filmeId": 2,
+  "texto": "Ótimo filme!",
+  "dataComentario": "2025-05-08T12:00:00Z"
+}
+
+###
+// 12) COMENTÁRIO – Deletar
+DELETE {{Streamer}}/comentario/deletar/1
+Authorization: Bearer {{token}}
+
+###
+// 13) ASSINATURA – Listar
+GET {{Streamer}}/assinatura/listar
+Authorization: Bearer {{token}}
+
+###
+// 14) ASSINATURA – Cadastrar
+POST {{Streamer}}/assinatura/cadastrar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "usuarioId": 2,
+  "dataInicio": "2025-05-01T00:00:00Z",
+  "dataFim": "2026-05-01T00:00:00Z",
+  "ativa": true
+}
+
+###
+// 15) ASSINATURA – Deletar
+DELETE {{Streamer}}/assinatura/deletar/1
+Authorization: Bearer {{token}}

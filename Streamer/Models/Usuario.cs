@@ -1,16 +1,29 @@
-using Streamer.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-public class Usuario
-{
-    public int Id { get; set; }
-    public string Nome { get; set; }
-    public string Email { get; set; }
-    public string Senha { get; set; }
-    public Permissao Permissao { get; set; } = Permissao.Usuario;
-    public List<int> Favoritos { get; set; } = new List<int>();
-    
-    // Relacionamentos
-    public List<Comentario> Comentarios { get; set; } = new List<Comentario>();
-    public List<Filme> Filmes { get; set; } = new List<Filme>();
-    public List<Assinatura> Assinaturas { get; set; } = new List<Assinatura>();
-}
+namespace Streamer.Models;
+
+    public class Usuario
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        public string Nome { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "O e-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "Formato de e-mail inválido.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "A senha é obrigatória.")]
+        public string Senha { get; set; } = string.Empty;
+
+        public Permissao Permissao { get; set; } = Permissao.Usuario;
+
+        public List<int> Favoritos { get; set; } = new();
+
+        // Navegação
+        public List<Comentario> Comentarios { get; set; } = new();
+        public List<Filme> Filmes { get; set; } = new();
+        public List<Assinatura> Assinaturas { get; set; } = new();
+    }

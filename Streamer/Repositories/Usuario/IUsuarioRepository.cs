@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Streamer.Models;
+
 namespace Streamer.Data
 {
     public interface IUsuarioRepository
