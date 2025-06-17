@@ -1,0 +1,25 @@
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependências e arquivos de build do Frontend (Next.js)
+/FRONT/front/node_modules
+/FRONT/front/.next
+/FRONT/front/out
+/FRONT/front/.env.local
+
+# Arquivos de build e cache do Backend (.NET)
+/API/Streamer/obj
+/API/Streamer/bin
+
+# Arquivos do Rider/VS
+.idea
+.vs
+
+# Arquivo de solução do Visual Studio
+*.sln
