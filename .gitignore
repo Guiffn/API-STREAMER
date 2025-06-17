@@ -1,25 +1,25 @@
-# Arquivos do sistema operacional
+# Ignorar logs e arquivos de sistema
+*.log
 .DS_Store
 Thumbs.db
 
-# Logs
-logs
-*.log
-npm-debug.log*
+# Ignorar arquivos do Visual Studio e Rider
+.vs/
+.idea/
+*.sln
 
-# Dependências e arquivos de build do Frontend (Next.js)
-/FRONT/front/node_modules
-/FRONT/front/.next
-/FRONT/front/out
+# Ignorar arquivos de build e dependências do Backend .NET
+API/Streamer/bin/
+API/Streamer/obj/
+
+# Ignorar arquivos de build e dependências do Frontend Next.js
+# --- CAMINHOS CORRIGIDOS PARA A SUA ESTRUTURA ---
+/FRONT/front/node_modules/
+/FRONT/front/.next/
+/FRONT/front/out/
 /FRONT/front/.env.local
 
-# Arquivos de build e cache do Backend (.NET)
-/API/Streamer/obj
-/API/Streamer/bin
-
-# Arquivos do Rider/VS
-.idea
-.vs
-
-# Arquivo de solução do Visual Studio
-*.sln
+# Ignorar arquivos de cache do npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
