@@ -12,6 +12,7 @@ import {
   Paper,
   Alert,
 } from '@mui/material';
+import Link from 'next/link'; // Certifique-se que esta linha está presente
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -71,6 +72,12 @@ export default function LoginForm() {
             >
               Entrar
             </Button>
+            {/* ESTE É O LOCAL CORRETO PARA O LINK DE CADASTRO */}
+            <Box sx={{ textAlign: 'center', mt: 2 }}>
+              <Link href="/register" passHref>
+                Não tem uma conta? Cadastre-se
+              </Link>
+            </Box>
           </Box>
         </Box>
       </Paper>
