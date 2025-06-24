@@ -10,7 +10,7 @@ using Streamer.Data;
 namespace Streamer.Migrations
 {
     [DbContext(typeof(StreamerContext))]
-    [Migration("20250623195421_Inicial")]
+    [Migration("20250624160558_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
