@@ -1,0 +1,56 @@
+.page {
+  --foreground: #fff;
+  --background: #111;
+  --accent-red: #e50914;
+  --accent-yellow: #ffd500;
+
+  --gray-alpha-200: rgba(255, 255, 255, 0.08);
+  --gray-alpha-100: rgba(255, 255, 255, 0.05);
+
+  --button-primary-hover: #e50914;
+  --button-secondary-hover: #222;
+
+  display: grid;
+  grid-template-rows: 80px 1fr 60px;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  padding: 40px;
+  gap: 32px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  grid-row-start: 2;
+  width: 100%;
+  max-width: 960px;
+}
+
+.ctas a {
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: 600;
+  background: var(--accent-red);
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.ctas a:hover {
+  background: #f40612;
+}
+
+.footer {
+  grid-row-start: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #777;
+}
+
+.logo {
+  filter: brightness(0) invert(1);
+}

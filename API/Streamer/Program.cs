@@ -20,6 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("Acesso total",
+        configs => configs
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod())
+);
+
 // Registro dos repositórios
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
@@ -55,6 +63,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Adiciona os middlewares de autenticação e autorização
+app.UseCors("Acesso total");
 app.UseAuthentication();
 app.UseAuthorization();
 

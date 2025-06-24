@@ -31,12 +31,7 @@ public class AuthController : ControllerBase
     public IActionResult Login([FromBody] LoginDto loginDto)
     {
         var user = _usersRepository.GetByEmail(loginDto.Email);
-        if (user == null)
-        {
-            return Unauthorized(new { mensagem = "Email ou senha inválidos" });
-        }
-
-        if (user.Password != loginDto.Password)
+        if (user == null || user.Password != loginDto.Password)
         {
             return Unauthorized(new { mensagem = "Email ou senha inválidos" });
         }
@@ -55,11 +50,13 @@ public class AuthController : ControllerBase
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveJwt!));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        var role = user.Permission == Permission.Admin ? "Admin" : "User";
+
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Permission.ToString()),
+            new Claim(ClaimTypes.Role, role),
             new Claim("UserId", user.Id.ToString())
         };
 
@@ -87,4 +84,4 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
-} 
+}
