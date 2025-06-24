@@ -1,7 +1,8 @@
 'use client';
 
+import * as React from 'react'; // Import React
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'; // Corrected import for App Router
 import {
   Box,
   Button,
@@ -22,18 +23,17 @@ export default function RegisterForm() {
   const [success, setSuccess] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { // More specific event type
     e.preventDefault();
     setError('');
     setSuccess('');
 
     try {
-      await api.post('/users', { name, email, password, permission: 0 }); // O backend define 0 como "User" por padrão
+      await api.post('/users', { name, email, password, permission: 0 });
       setSuccess('Cadastro realizado com sucesso! Faça login para continuar.');
       setName('');
       setEmail('');
       setPassword('');
-      // Opcional: redirecionar para a página de login após alguns segundos
       setTimeout(() => {
         router.push('/login');
       }, 3000);
@@ -60,7 +60,8 @@ export default function RegisterForm() {
               label="Nome"
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              // Add explicit type for the event object 'e'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -69,7 +70,8 @@ export default function RegisterForm() {
               label="Email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              // Add explicit type for the event object 'e'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -78,7 +80,8 @@ export default function RegisterForm() {
               label="Senha"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              // Add explicit type for the event object 'e'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
