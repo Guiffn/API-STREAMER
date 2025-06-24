@@ -10,8 +10,8 @@ using Streamer.Data;
 namespace Streamer.Migrations
 {
     [DbContext(typeof(StreamerContext))]
-    [Migration("20250512031211_Initial")]
-    partial class Initial
+    [Migration("20250624160558_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
