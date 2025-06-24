@@ -7,9 +7,24 @@ using Streamer.Repositories.Users;
 using Streamer.Repositories.Categories;
 using Streamer.Repositories.Movies;
 
+ 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+ 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")  
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
+ 
 builder.Services.AddDbContext<StreamerContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -20,12 +35,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registro dos repositórios
+ 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
 
-// Configuração do JWT
+ 
 var chaveJwt = builder.Configuration["JwtSettings:SecretKey"];
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -54,7 +69,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Adiciona os middlewares de autenticação e autorização
+ 
+app.UseCors(MyAllowSpecificOrigins);
+
+ 
 app.UseAuthentication();
 app.UseAuthorization();
 

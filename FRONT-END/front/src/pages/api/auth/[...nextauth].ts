@@ -17,7 +17,6 @@ export const authOptions: NextAuthOptions = {
         if (!credentials) return null;
 
         try {
-          // Usando a URL da API diretamente na chamada de login
           const res = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -34,10 +33,12 @@ export const authOptions: NextAuthOptions = {
           const data: LoginResponse = await res.json();
           
           if (data.user && data.token) {
+            // CORREÇÃO: Retornar todos os dados necessários para a sessão
             return {
               id: data.user.id.toString(),
               name: data.user.name,
               email: data.user.email,
+              permission: data.user.permission, // Incluindo a permissão
               accessToken: data.token,
             };
           }
@@ -50,13 +51,21 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    // CORREÇÃO: Adicionar ID e Permissão ao token JWT
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
+        token.permission = (user as any).permission;
         token.accessToken = (user as any).accessToken;
       }
       return token;
     },
+    // CORREÇÃO: Adicionar ID e Permissão à sessão do cliente
     async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.permission = token.permission as string;
+      }
       if (token.accessToken) {
         session.accessToken = token.accessToken as string;
       }

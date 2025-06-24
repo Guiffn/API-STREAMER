@@ -46,6 +46,7 @@ public class AuthController : ControllerBase
         return Ok(new LoginResponseDto
         {
             Token = token,
+            User = user 
         });
     }
 
@@ -87,4 +88,4 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
-} 
+}
