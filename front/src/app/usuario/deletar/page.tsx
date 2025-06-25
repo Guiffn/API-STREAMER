@@ -3,17 +3,16 @@
 import { useEffect, useState } from "react";
 import {
   Container,
-  Paper,
   Typography,
   TextField,
   Button,
   Alert,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import api from "@/app/Services/api";
 
-// Não usamos um tipo fixo aqui pois a claim de role vem com URL
 type TokenPayload = {
   [key: string]: any;
 };
@@ -35,9 +34,8 @@ export default function ExcluirUsuarioAdmin() {
 
     try {
       const decoded: TokenPayload = jwtDecode(token);
-
-      // A claim de role vem com nome completo em tokens gerados com ClaimTypes.Role
-      const decodedRole = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      const decodedRole =
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
       setRole(decodedRole);
     } catch {
       setErro("Token inválido.");
@@ -69,8 +67,8 @@ export default function ExcluirUsuarioAdmin() {
 
   if (carregando) {
     return (
-      <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Typography>Verificando permissões...</Typography>
+      <Container maxWidth="sm" sx={{ mt: 4, textAlign: 'center' }}>
+        <CircularProgress sx={{ color: '#e50914' }} />
       </Container>
     );
   }
@@ -84,9 +82,25 @@ export default function ExcluirUsuarioAdmin() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={6} sx={{ p: 4 }}>
-        <Typography variant="h6" gutterBottom>
+    <Container
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1,
+      }}
+    >
+      <Box
+        sx={{
+          p: { xs: 3, md: 5 },
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          borderRadius: 2,
+          color: "#fff",
+          maxWidth: "500px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Excluir Usuário por ID
         </Typography>
 
@@ -99,17 +113,28 @@ export default function ExcluirUsuarioAdmin() {
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
             fullWidth
+            required
+            type="number"
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{ '& .MuiInputBase-root': { backgroundColor: '#333', color: '#fff' } }}
           />
 
           <Button
             variant="contained"
-            color="error"
             onClick={handleExcluir}
+            sx={{
+              mt: 2,
+              py: 1.5,
+              fontSize: "1rem",
+              fontWeight: "bold",
+              backgroundColor: "#e50914",
+              "&:hover": { backgroundColor: "#f40612" },
+            }}
           >
             Excluir Usuário
           </Button>
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

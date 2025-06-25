@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Container,
-  Paper,
   TextField,
   Typography,
   Alert,
@@ -81,14 +80,30 @@ export default function FilmeEditar() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={10} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
+    <Container
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1
+      }}
+    >
+      <Box
+        sx={{
+          p: { xs: 3, md: 5 },
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          borderRadius: 2,
+          color: "#fff",
+          maxWidth: "500px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           Editar Filme
         </Typography>
 
-        {mensagem && <Alert severity="success">{mensagem}</Alert>}
-        {erro && <Alert severity="error">{erro}</Alert>}
+        {mensagem && <Alert severity="success" sx={{ mb: 2 }}>{mensagem}</Alert>}
+        {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
 
         <Box
           component="form"
@@ -102,6 +117,11 @@ export default function FilmeEditar() {
             onChange={(e) => setFilmeSelecionadoId(e.target.value)}
             required
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': { backgroundColor: '#333', color: '#fff' },
+              '& .MuiSelect-icon': { color: '#fff' }
+            }}
           >
             <MenuItem value="">Selecionar...</MenuItem>
             {filmes.map((filme) => (
@@ -116,6 +136,10 @@ export default function FilmeEditar() {
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': { backgroundColor: '#333', color: '#fff' }
+            }}
           />
 
           <TextField
@@ -124,6 +148,11 @@ export default function FilmeEditar() {
             value={categoriaId}
             onChange={(e) => setCategoriaId(e.target.value)}
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': { backgroundColor: '#333', color: '#fff' },
+              '& .MuiSelect-icon': { color: '#fff' }
+            }}
           >
             <MenuItem value="">Selecionar...</MenuItem>
             {categorias.map((cat) => (
@@ -136,13 +165,25 @@ export default function FilmeEditar() {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             disabled={!filmeSelecionadoId}
+            fullWidth
+            sx={{
+              mt: 2,
+              py: 1.5,
+              fontSize: "1rem",
+              fontWeight: "bold",
+              backgroundColor: "#e50914",
+              '&:hover': { backgroundColor: '#f40612' },
+              '&.Mui-disabled': { // Estilo para o botão desabilitado
+                backgroundColor: '#555',
+                color: '#888'
+              }
+            }}
           >
             Atualizar
           </Button>
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

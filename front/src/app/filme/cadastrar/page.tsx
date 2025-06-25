@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
   Box,
-  Paper,
   Alert,
 } from "@mui/material";
 
@@ -54,33 +53,35 @@ export default function FilmeCadastrar() {
         router.push("/filme/listar");
       }, 1500);
     } catch (error: any) {
-      const status = error?.response?.status;
-      const data = error?.response?.data?.toString() || "";
-
-      // Verifica erro de duplicidade
-      if (data.includes("Duplicate entry")) {
-        const tituloDuplicado = titulo.toUpperCase();
-        setErro(`O filme "${tituloDuplicado}" já foi cadastrado por outro usuário.`);
-        return;
-      }
-
-      if (status === 400 || status === 409) {
-        setErro("Filme já cadastrado ou inválido.");
-      } else {
-        setErro("Erro ao cadastrar filme. Verifique os dados e tente novamente.");
-      }
+      setErro("Erro ao cadastrar filme. Verifique os dados e tente novamente.");
     }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={10} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
+    <Container
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1
+      }}
+    >
+      <Box
+        sx={{
+          p: { xs: 3, md: 5 },
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          borderRadius: 2,
+          color: "#fff",
+          maxWidth: "500px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           Cadastrar Filme
         </Typography>
 
-        {erro && <Alert severity="error">{erro}</Alert>}
-        {sucesso && <Alert severity="success">{sucesso}</Alert>}
+        {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
+        {sucesso && <Alert severity="success" sx={{ mb: 2 }}>{sucesso}</Alert>}
 
         <Box
           component="form"
@@ -93,6 +94,13 @@ export default function FilmeCadastrar() {
             onChange={(e) => setTitulo(e.target.value)}
             required
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': {
+                backgroundColor: '#333',
+                color: '#fff'
+              },
+            }}
           />
           <TextField
             select
@@ -101,6 +109,16 @@ export default function FilmeCadastrar() {
             onChange={(e) => setCategoriaId(Number(e.target.value))}
             required
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': {
+                backgroundColor: '#333',
+                color: '#fff'
+              },
+              '& .MuiSelect-icon': {
+                color: '#fff'
+              }
+            }}
           >
             <MenuItem value={0}>Selecionar...</MenuItem>
             {categorias.map((cat) => (
@@ -109,12 +127,26 @@ export default function FilmeCadastrar() {
               </MenuItem>
             ))}
           </TextField>
-
-          <Button type="submit" variant="contained" color="primary">
+          
+           <Button
+            type="submit"
+            variant="contained" 
+            fullWidth
+             sx={{
+              mt: 2,
+              py: 1.5,
+              fontSize: "1rem",
+              fontWeight: "bold",
+              backgroundColor: "#e50914",  
+              '&:hover': {
+                backgroundColor: "#f40612",  
+              },
+            }}
+          >
             Salvar
           </Button>
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import {
   Container,
   Typography,
-  Paper,
   Box,
   CircularProgress,
   Alert,
@@ -37,24 +36,40 @@ export default function UsuarioAutenticado() {
   }, []);
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={10} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
-          Dados do Usuário Autenticado
+    <Container
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1
+      }}
+    >
+      <Box
+        sx={{
+          p: { xs: 3, md: 5 },
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          borderRadius: 2,
+          color: "#fff",
+          maxWidth: "500px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Meu Perfil
         </Typography>
 
-        {carregando && <CircularProgress />}
+        {carregando && <CircularProgress sx={{ color: '#e50914' }} />}
         {erro && <Alert severity="error">{erro}</Alert>}
 
         {usuario && (
-          <Box sx={{ mt: 2 }}>
-            <Typography><strong>ID:</strong> {usuario.id}</Typography>
-            <Typography><strong>Nome:</strong> {usuario.name}</Typography>
-            <Typography><strong>Email:</strong> {usuario.email}</Typography>
-            <Typography><strong>Permissão:</strong> {usuario.permission}</Typography>
+          <Box sx={{ mt: 2, wordBreak: 'break-word' }}>
+            <Typography sx={{ mb: 1 }}><strong style={{ color: '#e50914' }}>ID:</strong> {usuario.id}</Typography>
+            <Typography sx={{ mb: 1 }}><strong style={{ color: '#e50914' }}>Nome:</strong> {usuario.name}</Typography>
+            <Typography sx={{ mb: 1 }}><strong style={{ color: '#e50914' }}>Email:</strong> {usuario.email}</Typography>
+            <Typography><strong style={{ color: '#e50914' }}>Permissão:</strong> {usuario.permission}</Typography>
           </Box>
         )}
-      </Paper>
+      </Box>
     </Container>
   );
 }

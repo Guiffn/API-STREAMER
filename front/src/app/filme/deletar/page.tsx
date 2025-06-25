@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Container,
-  Paper,
   TextField,
   Typography,
   Alert,
@@ -33,13 +32,29 @@ export default function FilmeDeletar() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={10} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
+    <Container
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1
+      }}
+    >
+      <Box
+        sx={{
+          p: { xs: 3, md: 5 },
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          borderRadius: 2,
+          color: "#fff",
+          maxWidth: "500px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
           Deletar Filme
         </Typography>
-        {mensagem && <Alert severity="success">{mensagem}</Alert>}
-        {erro && <Alert severity="error">{erro}</Alert>}
+        {mensagem && <Alert severity="success" sx={{ mb: 2 }}>{mensagem}</Alert>}
+        {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
         <Box
           component="form"
           onSubmit={handleDelete}
@@ -52,12 +67,33 @@ export default function FilmeDeletar() {
             onChange={(e) => setId(e.target.value)}
             required
             fullWidth
+            InputLabelProps={{ style: { color: "#8c8c8c" } }}
+            sx={{
+              '& .MuiInputBase-root': {
+                backgroundColor: '#333',
+                color: '#fff'
+              },
+            }}
           />
-          <Button type="submit" variant="contained" color="error">
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{
+              mt: 2,
+              py: 1.5,
+              fontSize: "1rem",
+              fontWeight: "bold",
+              backgroundColor: "#e50914",
+              "&:hover": {
+                backgroundColor: "#f40612",
+              },
+            }}
+          >
             Deletar
           </Button>
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }
